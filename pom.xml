@@ -16,6 +16,7 @@
     <description>shiyue-cloud-system</description>
     <modules>
         <module>shiyue-common</module>
+        <module>shiyue-system</module>
     </modules>
     <properties>
         <java.version>21</java.version>

@@ -9,22 +9,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shiyue-common</artifactId>
+    <artifactId>shiyue-system</artifactId>
+
     <properties>
-        <swagger.version>2.9.2</swagger.version>
-        <knife4j.version>3.0.2</knife4j.version>
+        <swagger-coord.version>2.0.2</swagger-coord.version>
     </properties>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.spring4all/swagger-spring-boot-starter -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-ui</artifactId>
-            <version>${knife4j.version}</version>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+            <version>${swagger-coord.version}</version>
         </dependency>
     </dependencies>
 
