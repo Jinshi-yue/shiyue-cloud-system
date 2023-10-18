@@ -11,8 +11,12 @@
     <groupId>com.shiyue</groupId>
     <artifactId>shiyue-cloud-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>shiyue-cloud-system</name>
     <description>shiyue-cloud-system</description>
+    <modules>
+        <module>shiyue-common</module>
+    </modules>
     <properties>
         <java.version>21</java.version>
     </properties>
