@@ -1,18 +1,18 @@
-package com.shiyue.common.config;
+package com.shiyue.swagger.config;
 
-import com.fasterxml.classmate.TypeResolver;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
-import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -29,10 +29,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 
 @Configuration
-//该注解是Springfox-swagger框架提供的使用Swagger注解，该注解必须加
 @EnableSwagger2
-//knife4j提供的增强扫描注解,Ui提供了例如动态参数、参数过滤、接口排序等增强功能
 @EnableKnife4j
+@EnableConfigurationProperties(SwaggerProperties.class)
+@ConditionalOnClass({Docket.class, ApiInfoBuilder.class})
+@ConditionalOnProperty(prefix = "swagger", value = "enable", matchIfMissing = true)
 public class SwaggerConfig {
 
     /**
@@ -48,7 +49,7 @@ public class SwaggerConfig {
      * @return
      */
     @Autowired
-    TypeResolver typeResolver;
+    private SwaggerProperties swaggerProperties;
 
     @Bean
     public Docket createRestApi(Environment environment) {
@@ -58,14 +59,14 @@ public class SwaggerConfig {
         //创建一个Docket的对象，相当于是swagger的一个实例
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
-                .groupName("2.x版本")
+                .groupName(swaggerProperties.getGroupName())
                 .apiInfo(apiInfo())
                 //只有当springboot配置文件为dev或test环境时，才开启swaggerAPI文档功能
-                .enable(true)
+                .enable(flag)
                 .select()
                 // 这里指定Controller扫描包路径:设置要扫描的接口类，一般是Controller类
-                .apis(RequestHandlerSelectors.basePackage("com.shiyue.common.controller"))  //这里采用包扫描的方式来确定要显示的接口
-                .apis(RequestHandlerSelectors.withMethodAnnotation(RestController.class))  //这里采用包扫描的方式来确定要显示的接口
+                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
+//                .apis(RequestHandlerSelectors.basePackage("com.shiyue.common.controller"))  //这里采用包扫描的方式来确定要显示的接口
 //                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)) //这里采用包含注解的方式来确定要显示的接口
                 // 配置过滤哪些，设置对应的路径才获取
                 .paths(PathSelectors.any())
@@ -75,11 +76,9 @@ public class SwaggerConfig {
     ///配置相关的api信息
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .description("API调试文档")
-                //作者信息
-                .contact(new Contact("何哥", "http://ip地址:8086/doc.html", "110@qq.com"))
-                .version("v1.0")
-                .title("消息通知服务API文档")
+                .description(swaggerProperties.getDescription())
+                .version(swaggerProperties.getVersion())
+                .title(swaggerProperties.getTitle())
                 //服务Url
                 .termsOfServiceUrl("")
                 .build();
