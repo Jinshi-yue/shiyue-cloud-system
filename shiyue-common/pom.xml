@@ -11,14 +11,9 @@
 
     <artifactId>shiyue-common</artifactId>
     <properties>
-        <knife4j.version>3.0.3</knife4j.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
+
     </dependencies>
 
 

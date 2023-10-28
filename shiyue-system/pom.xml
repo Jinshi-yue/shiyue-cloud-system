@@ -21,6 +21,11 @@
             <artifactId>swagger-spring-boot-starter</artifactId>
             <version>${swagger-coord.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.shiyue</groupId>
+            <artifactId>shiyue-common-swagger</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

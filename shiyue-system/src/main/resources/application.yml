@@ -3,3 +3,10 @@ spring:
     pathmatch:
       matching-strategy:
         ant_path_matcher
+swagger:
+  title: shiyue-system
+  description: shiyue-system
+  group-name: shiyue-system
+  version: 1.0.0
+  base-package: com.shiyue.system
+
